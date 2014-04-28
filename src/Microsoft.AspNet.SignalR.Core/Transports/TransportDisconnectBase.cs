@@ -346,11 +346,6 @@ namespace Microsoft.AspNet.SignalR.Transports
 
         protected virtual internal Task EnqueueOperation(Func<object, Task> writeAsync, object state)
         {
-            return EnqueueOperationCore(writeAsync, state);
-        }
-
-        protected internal Task EnqueueOperationCore(Func<object, Task> writeAsync, object state)
-        {
             if (!IsAlive)
             {
                 return TaskAsyncHelper.Empty;
@@ -359,6 +354,7 @@ namespace Microsoft.AspNet.SignalR.Transports
             // Only enqueue new writes if the connection is alive
             Task writeTask = WriteQueue.Enqueue(writeAsync, state);
             _lastWriteTask = writeTask;
+
             return writeTask;
         }
 
