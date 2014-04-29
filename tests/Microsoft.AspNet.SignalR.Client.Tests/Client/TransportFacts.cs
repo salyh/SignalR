@@ -20,7 +20,7 @@ namespace Microsoft.AspNet.SignalR.Client.Tests
         [InlineData("bob=12345", "&bob=12345")]
         [InlineData("bob=12345&foo=leet&baz=laskjdflsdk", "&bob=12345&foo=leet&baz=laskjdflsdk")]
         [InlineData("", "")]
-        [InlineData(null, "?transport=&connectionToken=")]
+        [InlineData(null, "&connectionToken=")]
         [InlineData("?foo=bar", "?foo=bar")]
         [InlineData("?foo=bar&baz=bear", "?foo=bar&baz=bear")]
         [InlineData("&foo=bar", "&foo=bar")]
@@ -212,6 +212,7 @@ namespace Microsoft.AspNet.SignalR.Client.Tests
 
                     connection.Setup(c => c.Trace(TraceLevels.Messages, It.IsAny<string>(), It.IsAny<object[]>()));
                     connection.SetupGet(c => c.Url).Returns("");
+                    connection.SetupGet(c => c.Protocol).Returns(new Version());
                     connection.SetupGet(c => c.QueryString).Returns("");
                     connection.SetupGet(c => c.ConnectionToken).Returns("");
                     connection.SetupGet(c => c.JsonSerializer).Returns(JsonSerializer.CreateDefault());
